@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GoldenGroupAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ef8fb8e2d0947d5c57796c1733ef462b5211ff9")]
 [assembly: System.Reflection.AssemblyProductAttribute("GoldenGroupAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GoldenGroupAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
