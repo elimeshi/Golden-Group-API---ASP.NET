@@ -6,8 +6,8 @@ ENV ASPNETCORE_URLS=http://+:8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["GoldenGroupAPI/GoldenGroupAPI.csproj", "GoldenGroupAPI/"]
-RUN dotnet restore "GoldenGroupAPI/GoldenGroupAPI.csproj"
+COPY ["./GoldenGroupAPI.csproj", "./"]
+RUN dotnet restore "./GoldenGroupAPI.csproj"
 COPY . .
 WORKDIR "/src/GoldenGroupAPI"
 RUN dotnet build "GoldenGroupAPI.csproj" -c $configuration -o /app/build
