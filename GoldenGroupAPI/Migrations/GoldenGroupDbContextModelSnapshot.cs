@@ -18,7 +18,7 @@ namespace GoldenGroupAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -67,18 +67,17 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnType("character varying(13)")
                         .HasColumnName("request_type");
 
-                    b.PrimitiveCollection<int[]>("Zones")
+                    b.Property<int[]>("Zones")
                         .IsRequired()
                         .HasColumnType("integer[]")
                         .HasColumnName("zones");
 
                     b.HasKey("Id")
-                        .HasName("pk_buyer_requests");
+                        .HasName("pk_buyer_request");
 
-                    b.HasIndex("ClientId")
-                        .HasDatabaseName("ix_buyer_requests_client_id");
+                    b.HasIndex("ClientId");
 
-                    b.ToTable("buyer_requests", (string)null);
+                    b.ToTable("buyer_request", (string)null);
 
                     b.HasDiscriminator<string>("RequestType").HasValue("BuyerRequest");
 
@@ -119,15 +118,15 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
-                    b.PrimitiveCollection<List<string>>("PhoneNumbers")
+                    b.Property<List<string>>("PhoneNumbers")
                         .IsRequired()
                         .HasColumnType("text[]")
                         .HasColumnName("phone_numbers");
 
                     b.HasKey("Id")
-                        .HasName("pk_clients");
+                        .HasName("pk_client");
 
-                    b.ToTable("clients", (string)null);
+                    b.ToTable("client", (string)null);
                 });
 
             modelBuilder.Entity("GoldenGroupAPI.Models.HousingUnit", b =>
@@ -161,12 +160,12 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnName("squared_meters");
 
                     b.HasKey("Id")
-                        .HasName("pk_housing_units");
+                        .HasName("pk_housing_unit");
 
                     b.HasIndex("ListingId")
-                        .HasDatabaseName("ix_housing_units_listing_id");
+                        .HasDatabaseName("ix_housing_unit_listing_id");
 
-                    b.ToTable("housing_units", (string)null);
+                    b.ToTable("housing_unit", (string)null);
                 });
 
             modelBuilder.Entity("GoldenGroupAPI.Models.Listing", b =>
@@ -250,12 +249,11 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnName("zone");
 
                     b.HasKey("Id")
-                        .HasName("pk_listings");
+                        .HasName("pk_listing");
 
-                    b.HasIndex("ClientId")
-                        .HasDatabaseName("ix_listings_client_id");
+                    b.HasIndex("ClientId");
 
-                    b.ToTable("listings", (string)null);
+                    b.ToTable("listing", (string)null);
 
                     b.HasDiscriminator<string>("ListingType").HasValue("Listing");
 
@@ -265,6 +263,8 @@ namespace GoldenGroupAPI.Migrations
             modelBuilder.Entity("GoldenGroupAPI.Models.NormalBuyerRequest", b =>
                 {
                     b.HasBaseType("GoldenGroupAPI.Models.BuyerRequest");
+
+                    b.ToTable("buyer_request", (string)null);
 
                     b.HasDiscriminator().HasValue("Normal");
                 });
@@ -289,12 +289,16 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("registration_type");
 
+                    b.ToTable("buyer_request", (string)null);
+
                     b.HasDiscriminator().HasValue("Tabo");
                 });
 
             modelBuilder.Entity("GoldenGroupAPI.Models.NormalListing", b =>
                 {
                     b.HasBaseType("GoldenGroupAPI.Models.Listing");
+
+                    b.ToTable("listing", (string)null);
 
                     b.HasDiscriminator().HasValue("Normal");
                 });
@@ -315,6 +319,8 @@ namespace GoldenGroupAPI.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("required_equity");
 
+                    b.ToTable("listing", (string)null);
+
                     b.HasDiscriminator().HasValue("Tabo");
                 });
 
@@ -325,7 +331,7 @@ namespace GoldenGroupAPI.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_buyer_requests_clients_client_id");
+                        .HasConstraintName("fk_buyer_request_client_client_id");
 
                     b.Navigation("Client");
                 });
@@ -337,7 +343,7 @@ namespace GoldenGroupAPI.Migrations
                         .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_housing_units_listings_listing_id");
+                        .HasConstraintName("fk_housing_unit_listing_listing_id");
                 });
 
             modelBuilder.Entity("GoldenGroupAPI.Models.Listing", b =>
@@ -347,7 +353,7 @@ namespace GoldenGroupAPI.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_listings_clients_client_id");
+                        .HasConstraintName("fk_listing_client_client_id");
 
                     b.Navigation("Client");
                 });
